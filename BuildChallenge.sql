@@ -5,36 +5,42 @@ USE BUILDCHALLENGE;
 --STUDENT NO: 103340660
 
 
-CREATE TABLE CLIENT
-(ClientID INT PRIMARY KEY,
-SURNAME NVARCHAR(100) NOT NULL,
-GivenName NVARCHAR(100) NOT NULL,
-Gender NVARCHAR(1));
+INSERT INTO TOUR
+(TourName, Description)
+VALUES
+('North', 'Tour of wineries and outlets of the Bedigo and Castlemaine region'),
+('South', 'Tour of wineries and outlets of Mornington Penisula'),
+('West', 'Tour of wineries and outlets of the Geelong and Otways region');
 
-CREATE TABLE TOUR
-(TourName NVARCHAR(100) PRIMARY KEY,
-Description NVARCHAR(500));
+INSERT INTO EVENT
+(TourName, EventMonth, EventDay, EventYear, EventFee)
+VALUES
+('North', 'Jan', 9, 2016, 200),
+('North', 'Feb', 13, 2016, 225),
+('South', 'Jan', 9, 2016, 200),
+('South', 'Jan', 16, 2016, 200),
+('West', 'Jan', 29, 2016, 225);
 
-CREATE TABLE EVENT
-(EventYear INT,
-EventMonth NVARCHAR(3),
-EventDay INT,
-TourName NVARCHAR(100),
-EventFee MONEY,
-CONSTRAINT PK_EvenT PRIMARY KEY (EventYear, EventDay, EventMonth, TourName),
-CONSTRAINT FK_Event_TourName FOREIGN KEY (TourName) REFERENCES TOUR (TourName));
+INSERT INTO CLIENT
+(ClientID, Surname, GivenName, Gender)
+VALUES
+(1, 'Price', 'Taylor', 'M'),
+(2, 'Gamble', 'Ellyse', 'F'),
+(3,'Tan', 'Tilly', 'F'),
+(4, 'Pajancic', 'Marina', 'F');
 
+SELECT * FROM CLIENT;
 
-CREATE TABLE BOOKING
-(ClientID INT NOT NULL,
-TourName NVARCHAR(100),
-EventMonth NVARCHAR(3),
-EventDay INT,
-EventYear INT,
-Payment MONEY,
-DateBooked DATE,
-CONSTRAINT FK_Booking_ClientID FOREIGN KEY (ClientID) REFERENCES CLIENT (ClientID),
-CONSTRAINT FK_Booking_Event FOREIGN KEY (EventYear, EventDay, EventMonth, TourName) REFERENCES EVENT);
-
-
-
+INSERT INTO BOOKING
+(ClientID, TourName, EventMonth, EventDay, EventYear, Payment, DateBooked)
+VALUES
+(1,'North', 'Jan', 9, 2016, 200, '2015-12-10'),
+(2, 'North', 'Jan', 9, 2016, 200, '2015-12-16'),
+(1,'North', 'Feb', 13, 2016, 225, '2016-01-08'),
+(2,'North', 'Feb', 13, 2016, 125, '2016-01-14'),
+(3,'North', 'Feb', 13, 2016, 225, '2016-02-03'),
+(1, 'South', 'Jan', 9, 2016, 200, '2015-12-10'),
+(2, 'South', 'Jan', 16, 2016, 200, '2015-12-18'),
+(3,'South', 'Jan', 16, 2016, 200, '2016-01-09' ),
+(2, 'West', 'Jan', 29, 2016, 225, '2015-12-17'),
+(3, 'West', 'Jan', 29, 2016, 200, '2015-12-18');
